@@ -1,6 +1,5 @@
 FROM node:18-alpine AS base
-
-RUN apk add -U tzdata
+RUN apk add --no-cache tzdata libc6-compat openssl
 ENV TZ=Europe/Paris
 RUN cp /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
@@ -8,10 +7,9 @@ LABEL org.opencontainers.image.source=https://github.com/kgrab75/raclettator
 LABEL org.opencontainers.image.description="Raclettator container image"
 LABEL org.opencontainers.image.licenses=MIT
 
-# Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# Nous avons déjà les libs dans base
+WORKDIR /app
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -37,6 +35,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=DOTENV_PRIVATE_KEY_PRODUCTION \
   export DOTENV_PRIVATE_KEY_PRODUCTION="$(cat /run/secrets/DOTENV_PRIVATE_KEY_PRODUCTION)" && \
+  if [ -z "$DOTENV_PRIVATE_KEY_PRODUCTION" ]; then echo "ERREUR: DOTENV_PRIVATE_KEY_PRODUCTION est vide ou manquant dans les secrets buildx"; exit 1; fi && \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run telemetry_off && npm run build; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm prisma generate && pnpm run build; \
