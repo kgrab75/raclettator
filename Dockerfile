@@ -10,7 +10,6 @@ LABEL org.opencontainers.image.licenses=MIT
 FROM base AS deps
 # Nous avons déjà les libs dans base
 WORKDIR /app
-WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
@@ -84,4 +83,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Commande pour lancer les migrations puis le serveur
-CMD ["sh", "-c", "npx prisma migrate deploy && dotenvx run -- node server.js"]
+CMD ["sh", "-c", "dotenvx run -- npx prisma migrate deploy && dotenvx run -- node server.js"]
