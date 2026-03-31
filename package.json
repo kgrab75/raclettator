@@ -4,10 +4,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 0.0.0.0",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "dotenvx run -- next dev",
+    "build": "dotenvx run -f .env.production -- next build",
+    "start": "dotenvx run -f .env.production -- next start",
+    "lint": "next lint",
+    "telemetry_off": "next telemetry --disable",
+    "telemetry_on": "next telemetry --enable",
+    "encrypt_env": "npx dotenvx encrypt -f .env.production",
+    "decrypt_env": "npx dotenvx decrypt -f .env.production"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
