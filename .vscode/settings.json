@@ -1,0 +1,5 @@
+{
+  "i18n-ally.localesPaths": ["i18n", "messages", "./messages"],
+  "i18n-ally.keystyle": "nested",
+  "remote.autoForwardPortsFallback": 0
+}

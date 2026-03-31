@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id           String        @id @default(cuid())
+  title        String
+  startsAt     DateTime
+  location     String
+  publicToken  String        @unique
+  adminToken   String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  items        Item[]
+  participants Participant[]
+}
+
+model Participant {
+  id            String         @id @default(cuid())
+  eventId       String
+  name          String
+  eaterSize     EaterSize
+  noPork        Boolean        @default(false)
+  noAlcohol     Boolean        @default(false)
+  isVeggie      Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  contributions Contribution[]
+  event         Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Item {
+  id               String         @id @default(cuid())
+  eventId          String
+  name             String
+  category         ItemCategory
+  systemKey        String?
+  isSystem         Boolean        @default(false)
+  requiredQuantity Float
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  contributions    Contribution[]
+  event            Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Contribution {
+  id            String      @id @default(cuid())
+  itemId        String
+  participantId String
+  quantity      Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  item          Item        @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, participantId])
+}
+
+model RateLimit {
+  ip        String   @id
+  points    Int      @default(0)
+  expiresAt DateTime
+}
+
+enum EaterSize {
+  SMALL
+  MEDIUM
+  XL
+}
+
+enum ItemCategory {
+  WEIGHT
+  UNIT
+}

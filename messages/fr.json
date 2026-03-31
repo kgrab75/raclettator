@@ -1,0 +1,392 @@
+{
+  "ServerErrors": {
+    "rateLimit": "Whoa, doucement ! Patiente quelques secondes.",
+    "participantLimit": "Maximum 20 participants autorisés par raclette.",
+    "itemLimit": "Maximum 40 articles autorisés par raclette."
+  },
+  "Navigation": {
+    "toStart": "Pour commencer",
+    "home": "Accueil",
+    "createEvent": "Créer un événement",
+    "editEvent": "Mon événement",
+    "editParticipants": "Mes participants",
+    "editItems": "Mes articles",
+    "eventDashboard": "Tableau de bord",
+    "openMenu": "Ouvrir le menu",
+    "footer": "C'est l'heure de la raclette !"
+  },
+  "Theme": {
+    "toggle": "Changer le thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "HomePage": {
+    "hero": {
+      "badge": "L'outil ultime pour vos soirées d'hiver",
+      "titlePart1": "L'art de la raclette, ",
+      "titlePart2": "enfin organisé.",
+      "description": "Oubliez les messages Whatsapp interminables pour savoir qui ramène l'appareil. {brand} calcule les quantités et permet à vos invités de s'assigner ce qu'ils apportent via un simple lien partagé.",
+      "cta": "Lancer l'appareil",
+      "disclaimer": "Totalement gratuit, sans inscription.",
+      "myEvents": "Vos raclettes récentes",
+      "goToEvent": "Gérer cet événement"
+    },
+    "chaos": {
+      "title": "Stop aux galères de dernière minute.",
+      "description": "Rien ne détruit plus l'ambiance qu'un manque de fromage ou l'oubli de la machine à raclette.",
+      "points": {
+        "calc": "Calcul précis :",
+        "calcDesc": "Finies les estimations au doigt mouillé. On vous dit exactement quoi acheter.",
+        "list": "Listes partagées :",
+        "listDesc": "Chacun sait ce qu'il doit apporter via un lien unique.",
+        "prefs": "Préférences gérées :",
+        "prefsDesc": "Sans porc, végétarien, petits appétits... On ajuste tout."
+      },
+      "bubbles": {
+        "hugo1": "Au fait, qui peut prendre un 2ème appareil à raclette ? 😅",
+        "you1": "Bonne question... Moi je n'en ai pas, je peux amener quoi ?",
+        "sarah1": "Moi je suis végétarienne, prévoyez pas de charcut pour moi stp 🌱",
+        "hugo2": "Ça marche, du coup on prend combien de fromage pour 8 ?",
+        "you2": "Je sais pas, 3kg ?",
+        "sarah2": "C'est beauuucoup trop 3kg mdr"
+      },
+      "senders": {
+        "hugo": "Hugo",
+        "you": "Toi",
+        "sarah": "Sarah"
+      },
+      "times": {
+        "t1": "14h02",
+        "t2": "14h05",
+        "t3": "14h10",
+        "t4": "14h12",
+        "t5": "14h15",
+        "t6": "14h16"
+      }
+    },
+    "calculator": {
+      "title": "Le Calculateur de Survie",
+      "description": "Voyons voir... Utilisez le slider pour simuler votre prochaine soirée.",
+      "guests": "Nombre de bouches à nourrir",
+      "min": "En tête à tête",
+      "max": "Grosse régalade",
+      "cheese": "Fromage à raclette",
+      "potatoes": "Pommes de terre",
+      "charcuterie": "Charcuterie",
+      "unit": "kg"
+    },
+    "footer": {
+      "title": "Plus de fromage, moins de charge mentale.",
+      "description": "Créez votre événement en 30 secondes. Partagez le lien à vos amis. Détendez-vous.",
+      "cta": "Organiser ma raclette"
+    },
+    "preview": {
+      "glance": "En un coup d'œil",
+      "participants": "Participants",
+      "listReady": "Liste prête",
+      "yes": "Oui",
+      "no": "Non"
+    }
+  },
+  "NewEvent": {
+    "title": "Crée un événement",
+    "description": "Définis le titre, le lieu et la date de ta prochaine raclette.",
+    "updateTitle": "Informations de l'événement",
+    "updateDescription": "Revois ou mets à jour les détails de ta soirée.",
+    "form": {
+      "title": {
+        "label": "Titre",
+        "placeholder": "🧀Raclette",
+        "preview": "🧀Raclette",
+        "errors": {
+          "required": "Merci de renseigner un titre.",
+          "tooLong": "Le titre est trop long."
+        }
+      },
+      "startsAt": {
+        "label": "Date et heure",
+        "placeholder": "jj/mm/aaaa hh:mm",
+        "preview": "le 30 janvier à 19h30",
+        "previewFromDate": "Le {day, selectordinal, one {#er} other {#}} {startsAtDate, date, ::MMMM} à {startsAtDate, time, short}",
+        "errors": {
+          "required": "Merci de choisir une date et une heure.",
+          "invalid": "Merci de saisir une date et une heure valides."
+        }
+      },
+      "location": {
+        "label": "Lieu",
+        "placeholder": "chez Hugo",
+        "preview": "chez Hugo",
+        "errors": {
+          "required": "Merci de renseigner un lieu.",
+          "tooLong": "Le lieu est trop long."
+        }
+      },
+      "submit": {
+        "label": "Créer l'événement",
+        "update": "Enregistrer",
+        "errors": {
+          "failed": "Une erreur est survenue. Réessaie."
+        },
+        "updateSuccess": "Événement mis à jour !"
+      }
+    }
+  },
+  "AdminEvent": {
+    "share": {
+      "title": "Partager et inviter",
+      "description": "Invite tes amis en leur envoyant ce lien, et ajoute la raclette à ton calendrier.",
+      "text": "Tu es invité à une raclette !",
+      "googleCalendar": "Ajouter au calendrier Google",
+      "toastSuccess": "L'invitation a été partagée !",
+      "toastCopied": "Lien copié dans le presse-papier !"
+    },
+    "Dashboard": {
+      "title": "Tableau de bord",
+      "description": "Suis l'état d'avancement de ta raclette et gère les apports.",
+      "itemStatus": "État des items",
+      "contribute": "Contribuer",
+      "noParticipants": "Ajoute des participants pour pouvoir enregistrer les premières contributions.",
+      "noParticipantsTitle": "Pas encore de participants",
+      "addParticipants": "Ajouter des participants",
+      "dialog": {
+        "title": "Contribution Admin",
+        "description": "Enregistre qui apporte quoi pour cet article.",
+        "selectParticipant": "Sélectionner un participant",
+        "quantity": "Quantité",
+        "submit": "Enregistrer",
+        "success": "Contribution enregistrée !"
+      }
+    },
+    "danger": {
+      "title": "Zone de danger",
+      "description": "Une fois l'événement supprimé, il n'y a pas de retour en arrière possible.",
+      "btnDelete": "Supprimer l'événement",
+      "modal": {
+        "title": "Es-tu absolument certain(e) ?",
+        "description": "Cette action est irréversible. Cela supprimera cet événement de nos serveurs, ainsi que tous les participants et articles associés.",
+        "cancel": "Annuler",
+        "confirm": "Oui, supprimer",
+        "deleting": "Suppression..."
+      }
+    }
+  },
+  "AdminParticipant": {
+    "title": "Liste des participants",
+    "description": "Gère tes participants en tenant compte de leurs particularités",
+    "btnCreate": "Nouveau participant",
+    "dialog": {
+      "create": {
+        "title": "Nouveau participant",
+        "description": "Ajoute un participant à l'événement"
+      },
+      "editing": {
+        "title": "Modifier",
+        "description": "Mets à jour les informations du participant"
+      }
+    },
+    "form": {
+      "common": {
+        "description": {
+          "named": "{name} {status}.",
+          "unnamed": "{subject} {status}.",
+          "subject": "Cette personne"
+        }
+      },
+      "name": {
+        "label": "Nom",
+        "placeholder": "Ex: Hugo",
+        "errors": {
+          "required": "Merci de renseigner un nom.",
+          "tooLong": "Le nom est trop long."
+        }
+      },
+      "eaterSize": {
+        "label": "Appétit",
+        "options": {
+          "SMALL": "Petit mangeur",
+          "MEDIUM": "Mangeur moyen",
+          "XL": "Bon mangeur"
+        },
+        "errors": {
+          "required": "Merci de renseigner un appétit.",
+          "invalid": "Merci de saisir un appétit valide."
+        }
+      },
+      "noPork": {
+        "label": "Sans porc",
+        "status": {
+          "checked": "ne mange pas de porc",
+          "notChecked": "mange du porc"
+        },
+        "errors": {
+          "required": "Merci de renseigner l'option sans porc.",
+          "invalid": "Merci de saisir une option sans porc valide."
+        }
+      },
+      "noAlcohol": {
+        "label": "Sans alcool",
+        "status": {
+          "checked": "ne boit pas d'alcool",
+          "notChecked": "boit de l'alcool"
+        },
+        "errors": {
+          "required": "Merci de renseigner l'option sans alcool.",
+          "invalid": "Merci de saisir une option sans alcool valide."
+        }
+      },
+      "isVeggie": {
+        "label": "Végétarien·ne",
+        "status": {
+          "checked": "est végétarien·ne",
+          "notChecked": "n'est pas végétarien·ne"
+        },
+        "errors": {
+          "required": "Merci de renseigner l'option \"végétarien\".",
+          "invalid": "Merci de saisir une option \"végétarien\" valide."
+        }
+      },
+      "submit": {
+        "create": "Ajouter le participant",
+        "creating": "Ajout...",
+        "edit": "Enregistrer",
+        "editing": "Enregistrement...",
+        "createSuccess": "Participant ajouté avec succès !",
+        "editSuccess": "Participant mis à jour !"
+      },
+      "cancel": "Annuler"
+    },
+    "empty": {
+      "title": "Aucun participant",
+      "description": "Ajoute tes participants manuellement ici pour commencer à organiser ta raclette."
+    }
+  },
+  "AdminItem": {
+    "title": "Liste des articles",
+    "description": "Ce qu'il faut prévoir pour la raclette",
+    "btnCreate": "Ajouter un article",
+    "dialog": {
+      "create": {
+        "title": "Ajouter un article",
+        "description": "Gérer les quantités à ramener"
+      },
+      "editing": {
+        "title": "Modifier l'article",
+        "description": "Mets à jour la quantité nécessaire"
+      }
+    },
+    "systemItems": {
+      "cheese": "Fromage à raclette",
+      "potatoes": "Pommes de terre",
+      "charcuterie": "Charcuterie",
+      "charcuterieVeggie": "Alternative végétarienne",
+      "charcuterieNoPork": "Charcuterie sans porc",
+      "soft": "Softs (Jus, Soda)",
+      "wine": "Bouteille de vin",
+      "pickles": "Bocal de cornichons",
+      "machine": "Appareil à raclette"
+    },
+    "systemWarning": "Cet article a été généré par l'application. Si vous le modifiez, sa quantité ne s'adaptera plus automatiquement au nombre de participants.",
+    "isSystem": "Calculé automatiquement",
+    "isManual": "Entré manuellement",
+    "categoryUnit": "unités/bouteilles",
+    "categoryWeight": "grammes",
+    "empty": {
+      "title": "Aucun article",
+      "description": "Ajoute des participants pour auto-générer la liste des articles nécessaires.",
+      "btnParticipants": "Ajouter des participants",
+      "btnAddManual": "Ajouter un article manuellement"
+    },
+    "form": {
+      "name": {
+        "label": "Nom de l'article",
+        "placeholder": "Ex: Vin blanc",
+        "errors": {
+          "required": "Merci de renseigner un nom.",
+          "tooLong": "Le nom est trop long."
+        }
+      },
+      "category": {
+        "label": "Type",
+        "options": {
+          "WEIGHT": "Poids (grammes)",
+          "UNIT": "Unité(s)"
+        },
+        "errors": {
+          "required": "Merci de choisir un type.",
+          "invalid": "Type invalide."
+        }
+      },
+      "requiredQuantity": {
+        "label": "Quantité (nombre ou grammes)",
+        "placeholder": "Ex: 400",
+        "errors": {
+          "required": "Merci de préciser la quantité.",
+          "invalid": "Doit être un nombre positif."
+        }
+      },
+      "submit": {
+        "create": "Ajouter l'article",
+        "creating": "Ajout...",
+        "edit": "Enregistrer",
+        "editing": "Enregistrement...",
+        "createSuccess": "Article ajouté avec succès !",
+        "editSuccess": "Article mis à jour !"
+      },
+      "cancel": "Annuler"
+    }
+  },
+  "EventCard": {
+    "today": "Aujourd'hui !",
+    "tomorrow": "Demain !",
+    "past": "Terminée",
+    "inDays": "Dans {days} jours",
+    "participants": "{count, plural, =0 {Aucun participant} =1 {1 participant} other {# participants}}",
+    "items": "{count, plural, =0 {Aucun article} =1 {1 article} other {# articles}}",
+    "copyLink": "Copier l'invitation",
+    "copied": "Copié !",
+    "manage": "Gérer",
+    "setupProgress": "Progression de la configuration",
+    "nextStepPrefix": "Prochaine étape :",
+    "nextStepParticipants": "Ajouter des participants",
+    "nextStepItems": "Configurer les articles",
+    "nextStepShare": "Partager l'invitation",
+    "allReady": "L'événement est prêt !"
+  },
+  "PublicPage": {
+    "welcome": "Bienvenue à la raclette !",
+    "intro": "L'organisateur a besoin de ton aide pour que la soirée soit parfaite. Dis-nous ce que tu ramènes.",
+    "contributeBtn": "Je m'en occupe",
+    "progress": "{current} / {total} {unit}",
+    "bringers": "{count, plural, =0 {Aucun contributeur} =1 {Un contributeur :} other {# contributeurs :}}",
+    "empty": "Personne n'apporte cet article pour l'instant.",
+    "completed": "C'est bon !",
+    "units": {
+      "g": "g",
+      "kg": "kg"
+    },
+    "stats": {
+      "title": "État des préparatifs",
+      "progress": "🧀 {found} / {total} articles trouvés",
+      "waitingFor": "On attend encore {names} ! 😋",
+      "others": " et {count} autres",
+      "allReady": "Tout est prêt ! Merci l'équipe 🍻"
+    },
+    "dialog": {
+      "title": "Contribuer à {itemName}",
+      "description": "Indique qui apporte cet article et quelle quantité.",
+      "who": "C'est qui ?",
+      "whoPlaceholder": "Choisis ton nom...",
+      "howMuch": "Quelle quantité ?",
+      "submit": "Valider",
+      "success": "C'est noté ! Merci {name}.",
+      "cancelInfo": "Mets 0 pour annuler une contribution.",
+      "contributeAll": "Tout apporter"
+    }
+  },
+  "OG": {
+    "catchphrase": "Qu'est-ce que tu apportes ?",
+    "description": "{date} {location} - Rejoignez-nous pour cette raclette et organisez vos contributions sur {brand} !"
+  }
+}
