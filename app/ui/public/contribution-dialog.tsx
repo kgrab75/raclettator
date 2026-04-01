@@ -16,7 +16,7 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { QuantitySelector } from '@/components/ui/quantity-selector';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from 'next-intl';
 import { useState, useTransition } from 'react';
@@ -51,7 +51,7 @@ export default function ContributionDialog({
   const handleParticipantChange = (id: string) => {
     setParticipantId(id);
     const existing = item.contributions.find((c: any) => c.participantId === id);
-    setQuantity(existing ? existing.quantity.toString() : '');
+    setQuantity(existing ? existing.quantity.toString() : '0');
   };
 
   const stepValue = (ROUNDING_RULES as any)[item.systemKey] || (item.category === 'WEIGHT' ? 100 : 1);
@@ -61,6 +61,8 @@ export default function ContributionDialog({
   const othersTotal = currentTotal - myCurrentContrib;
   const maxAllowed = Math.max(0, item.requiredQuantity - othersTotal);
   const maxAllowedFormatted = formatQuantity(maxAllowed, item.category, t);
+
+  const unitLabel = item.category === 'WEIGHT' ? t('units.g') : 'pcs';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +99,7 @@ export default function ContributionDialog({
               {t('dialog.who')}
             </Label>
             <Select onValueChange={handleParticipantChange} value={participantId}>
-              <SelectTrigger className="w-full h-12 border-amber-500/20 bg-background/50">
+              <SelectTrigger className="w-full h-[56px] !h-[56px] border-amber-500/20 bg-background/50 text-lg rounded-xl px-4">
                 <SelectValue placeholder={t('dialog.whoPlaceholder')} />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -125,32 +127,28 @@ export default function ContributionDialog({
                 </button>
               )}
             </div>
-            <div className="relative group">
-              <Input
-                id="quantity"
-                type="number"
-                step={stepValue}
-                min="0"
-                max={maxAllowed}
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                disabled={!participantId}
-                placeholder={participantId ? `Max: ${maxAllowedFormatted}` : t('dialog.whoPlaceholder')}
-                className="h-12 pl-4 pr-12 text-lg font-bold border-amber-500/20 bg-background/50 focus-visible:ring-amber-500"
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-muted-foreground/60">
-                {item.category === 'WEIGHT' ? 'g' : 'pcs'}
-              </span>
-            </div>
+            
+            <QuantitySelector
+              value={quantity}
+              onChange={setQuantity}
+              min={0}
+              max={maxAllowed}
+              step={stepValue}
+              unit={unitLabel}
+              disabled={!participantId}
+              className="mt-2"
+            />
+
             <p className="text-xs text-muted-foreground italic px-1 pt-1 opacity-70">
               {t('dialog.cancelInfo')}
             </p>
           </div>
 
+
           <DialogFooter className="pt-4">
             <Button 
               type="submit" 
-              className="w-full h-12 text-lg font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg transition-all"
+              className="w-full h-[56px] text-xl font-black bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg transition-all rounded-xl"
               disabled={isPending || !participantId || !quantity}
             >
               {isPending ? "..." : t('dialog.submit')}
