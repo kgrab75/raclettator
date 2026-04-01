@@ -22,7 +22,8 @@ export async function GET(
       };
 
       // 1. Initial connection success
-      sendEvent("connected", { publicToken });
+      const emitterId = RealtimeEmitter.getInstanceId?.() || "unknown";
+      sendEvent("connected", { publicToken, emitterId });
 
       // 2. Subscribe to the real-time emitter
       const unsubscribe = RealtimeEmitter.subscribe(publicToken, () => {
