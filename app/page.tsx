@@ -29,7 +29,7 @@ export default async function HomePage() {
       </header>
 
       {/* GLOBAL BACKDROP GLOW */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-amber-500/20 blur-[120px] dark:bg-amber-500/10" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-full -translate-x-1/2 rounded-full bg-amber-500/20 blur-[120px] dark:bg-amber-500/10" />
 
       {/* 1. IMMERSIVE HERO */}
       <section className="relative flex flex-col items-center justify-center px-4 pt-16 pb-16 text-center md:pt-32 md:pb-32">
@@ -191,11 +191,10 @@ function ChatBubble({ sender, message, time, isMe = false }: { sender: string, m
     <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} max-w-[85%] sm:max-w-[80%] ${isMe ? 'ml-auto' : 'mr-auto'}`}>
       <span className="mb-0.5 sm:mb-1 text-[10px] sm:text-xs text-muted-foreground px-2">{sender}</span>
       <div
-        className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm shadow-sm ${
-          isMe
+        className={`rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm shadow-sm ${isMe
             ? 'rounded-tr-none bg-amber-500 text-white dark:bg-amber-600'
             : 'rounded-tl-none bg-muted/80 backdrop-blur-sm dark:bg-muted/50 border border-border/50'
-        }`}
+          }`}
       >
         {message}
       </div>

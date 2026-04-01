@@ -13,11 +13,11 @@ import { Suspense } from 'react';
 
 async function getFormattedDate(date: Date) {
   const tStartsAt = await getTranslations('NewEvent.form.startsAt');
-    
+
   const d = new Date(date);
-  return tStartsAt('previewFromDate', { 
-      day: d.getDate(), 
-      startsAtDate: d 
+  return tStartsAt('previewFromDate', {
+    day: d.getDate(),
+    startsAtDate: d
   });
 }
 
@@ -29,11 +29,11 @@ export async function generateMetadata({
   const { publicToken } = await params;
   const t = await getTranslations('OG');
   const brand = (process.env.NEXT_PUBLIC_BRAND || 'Raclettator');
-  
+
   try {
     const event = await fetchEventByPublicToken(publicToken);
     const description = t('description', { date: await getFormattedDate(event.startsAt), location: event.location, brand });
-    
+
     return {
       title: `${brand} | ${event.title}`,
       description,
@@ -63,9 +63,9 @@ async function PublicEventContributionsSection({ publicToken }: { publicToken: s
   ]);
 
   return (
-    <EventContributions 
-      items={items} 
-      participants={participants} 
+    <EventContributions
+      items={items}
+      participants={participants}
       publicToken={publicToken}
     />
   );
@@ -77,7 +77,7 @@ export default async function PublicPage({
   params: Promise<{ publicToken: string }>;
 }) {
   const { publicToken } = await params;
-  
+
   let event;
   try {
     event = await fetchEventByPublicToken(publicToken);
@@ -90,8 +90,8 @@ export default async function PublicPage({
   return (
     <div className="relative min-h-screen bg-background">
       {/* Background Decor */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-amber-500/10 blur-[120px]" />
-      
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-full -translate-x-1/2 rounded-full bg-amber-500/10 blur-[120px]" />
+
       <header className="absolute top-0 right-0 w-full p-4 flex justify-end gap-2 z-50">
         <LanguageSwitcher />
         <ThemeToggle />
