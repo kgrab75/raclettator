@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import LanguageSwitcher from '@/app/ui/common/language-switcher';
 import AppSidebar from '@/app/ui/common/navigation/app-sidebar';
+import BottomNav from '@/app/ui/common/navigation/bottom-nav';
 import { buildNavigationItems } from '@/app/ui/common/navigation/build-navigation';
 import EventInfos from '@/app/ui/event/event-infos';
 import EventInfosSkeleton from '@/app/ui/event/event-infos-skeleton';
@@ -50,7 +51,7 @@ export default async function AdminLayout({
 
         <Separator />
 
-        <main className="mx-auto w-full max-w-6xl px-4 py-4">
+        <main className="mx-auto w-full max-w-6xl px-4 py-4 pb-24 md:pb-4">
           <div className="flex gap-2 flex-col">
             <Suspense fallback={<EventInfosSkeleton />}>
               <EventInfos adminToken={adminToken} />
@@ -58,6 +59,7 @@ export default async function AdminLayout({
             {children}
           </div>
         </main>
+        <BottomNav adminToken={adminToken} />
       </SidebarInset>
     </SidebarProvider>
   );
