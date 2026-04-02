@@ -376,6 +376,7 @@
       "progress": "🧀 {found} / {total} items found",
       "waitingFor": "Still waiting for {names}! 😋",
       "others": " and {count} more",
+      "stillMissing": "Everyone has replied, but we're still missing some items! 🧀",
       "allReady": "Everything is ready! Best team 🍻"
     },
     "dialog": {

@@ -4,9 +4,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { GraduationCap, PartyPopper, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export default function ContributionStats({ items, participants }: { 
-  items: any[], 
-  participants: any[] 
+export default function ContributionStats({ items, participants }: {
+  items: any[],
+  participants: any[]
 }) {
   const t = useTranslations('PublicPage');
 
@@ -16,7 +16,7 @@ export default function ContributionStats({ items, participants }: {
     const current = item.contributions.reduce((acc: number, c: any) => acc + c.quantity, 0);
     return current >= item.requiredQuantity;
   }).length;
-  
+
   const globalProgress = totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
   const isFullyReady = completedItems === totalItems && totalItems > 0;
 
@@ -27,7 +27,7 @@ export default function ContributionStats({ items, participants }: {
   });
 
   const missingParticipants = participants.filter(p => !contributorIds.has(p.id));
-  
+
   // 3. Format the "waiting for" list
   const maxNamesToShow = 3;
   const displayedNames = missingParticipants.slice(0, maxNamesToShow).map(p => p.name);
@@ -36,8 +36,8 @@ export default function ContributionStats({ items, participants }: {
   let waitingMessage = "";
   if (missingParticipants.length > 0) {
     const namesStr = displayedNames.join(', ');
-    waitingMessage = t('stats.waitingFor', { 
-      names: namesStr + (othersCount > 0 ? t('stats.others', { count: othersCount }) : "") 
+    waitingMessage = t('stats.waitingFor', {
+      names: namesStr + (othersCount > 0 ? t('stats.others', { count: othersCount }) : "")
     });
   }
 
@@ -56,7 +56,7 @@ export default function ContributionStats({ items, participants }: {
           </div>
 
           <div className="w-full md:w-64 h-3 bg-amber-500/10 rounded-full overflow-hidden border border-amber-500/10">
-            <div 
+            <div
               className={`h-full transition-all duration-1000 ease-out ${isFullyReady ? 'bg-green-500' : 'bg-gradient-to-r from-amber-500 to-orange-500'}`}
               style={{ width: `${globalProgress}%` }}
             />
@@ -70,8 +70,15 @@ export default function ContributionStats({ items, participants }: {
               {waitingMessage}
             </p>
           </div>
+        ) : completedItems < totalItems ? (
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/10 animate-in fade-in slide-in-from-top-1">
+            <GraduationCap className="size-5 text-amber-500" />
+            <p className="text-sm font-bold text-amber-700 dark:text-amber-400">
+              {t('stats.stillMissing')}
+            </p>
+          </div>
         ) : totalItems > 0 && (
-          <div className="flex items-center gap-3 p-3 rounded-lg bg-green-500/5 border border-green-500/10">
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-green-500/5 border border-green-500/10 animate-in fade-in slide-in-from-top-1">
             <PartyPopper className="size-5 text-green-500" />
             <p className="text-sm font-bold text-green-700 dark:text-green-400">
               {t('stats.allReady')}

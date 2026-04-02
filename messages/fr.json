@@ -376,6 +376,7 @@
       "progress": "🧀 {found} / {total} articles trouvés",
       "waitingFor": "On attend encore {names} ! 😋",
       "others": " et {count} autres",
+      "stillMissing": "Tout le monde a répondu, mais il manque encore des articles ! 🧀",
       "allReady": "Tout est prêt ! Merci l'équipe 🍻"
     },
     "dialog": {
