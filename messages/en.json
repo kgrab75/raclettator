@@ -389,6 +389,13 @@
       "success": "Got it! Thanks {name}.",
       "cancelInfo": "Set to 0 to cancel a contribution.",
       "contributeAll": "Contribute all"
+    },
+    "whoAreYou": "Who are you?",
+    "whoAreYouPlaceholder": "Select your name...",
+    "myContributions": {
+      "title": "Your commitments",
+      "empty": "You haven't committed to bringing anything yet! Tell us what you're bringing below. 👇",
+      "itemLine": "{quantity}"
     }
   },
   "OG": {

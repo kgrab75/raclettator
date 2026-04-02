@@ -389,6 +389,13 @@
       "success": "C'est noté ! Merci {name}.",
       "cancelInfo": "Mets 0 pour annuler une contribution.",
       "contributeAll": "Tout apporter"
+    },
+    "whoAreYou": "Qui es-tu ?",
+    "whoAreYouPlaceholder": "Choisis ton nom...",
+    "myContributions": {
+      "title": "Tes engagements",
+      "empty": "Tu n'as encore rien prévu d'apporter ! Dis-nous ce que tu ramènes ci-dessous. 👇",
+      "itemLine": "{quantity}"
     }
   },
   "OG": {

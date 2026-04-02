@@ -10,10 +10,11 @@ import ContributionDialog from './contribution-dialog';
 
 import { formatProgressRange, formatQuantity } from '@/lib/utils/format';
 
-export default function ContributionCard({ item, participants, publicToken }: {
+export default function ContributionCard({ item, participants, publicToken, selectedParticipantId }: {
   item: any,
   participants: any[],
-  publicToken: string
+  publicToken: string,
+  selectedParticipantId?: string
 }) {
   const t = useTranslations('PublicPage');
   const tItem = useTranslations('AdminItem');
@@ -23,10 +24,12 @@ export default function ContributionCard({ item, participants, publicToken }: {
   const isCompleted = currentTotal >= item.requiredQuantity;
   const progress = Math.min(100, (currentTotal / item.requiredQuantity) * 100);
 
+  const isMyContribution = selectedParticipantId && item.contributions.some((c: any) => c.participantId === selectedParticipantId);
+
   const progressLabel = formatProgressRange(currentTotal, item.requiredQuantity, item.category, t);
 
   return (
-    <Card className={`group relative overflow-hidden transition-all hover:shadow-lg backdrop-blur-sm flex flex-col h-full border-amber-500/10 bg-background/50 ${isCompleted ? 'ring-2 ring-green-500/50 border-green-500/20' : ''}`}>
+    <Card className={`group relative overflow-hidden transition-all hover:shadow-lg backdrop-blur-sm flex flex-col h-full border-amber-500/10 bg-background/50 ${isCompleted ? 'ring-2 ring-green-500/50 border-green-500/20' : ''} ${isMyContribution ? 'ring-2 ring-amber-500 border-amber-500/50 shadow-amber-500/10 shadow-lg scale-[1.01] z-10' : ''}`}>
       <CardHeader>
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -59,7 +62,11 @@ export default function ContributionCard({ item, participants, publicToken }: {
           <div className="flex flex-wrap gap-2 min-h-6">
             {item.contributions.length > 0 ? (
               item.contributions.map((c: any) => (
-                <Badge key={c.participant.name} variant="secondary" className="bg-muted/50 font-normal py-1">
+                <Badge 
+                  key={c.participant.name} 
+                  variant={c.participantId === selectedParticipantId ? "default" : "secondary"} 
+                  className={`${c.participantId === selectedParticipantId ? "bg-amber-500 text-white" : "bg-muted/50"} font-normal py-1`}
+                >
                   <span className="font-semibold mr-1">{c.participant.name}</span> {formatQuantity(c.quantity, item.category, t)}
                 </Badge>
               ))
@@ -87,6 +94,7 @@ export default function ContributionCard({ item, participants, publicToken }: {
         currentTotal={currentTotal}
         participants={participants}
         publicToken={publicToken}
+        selectedParticipantId={selectedParticipantId}
       />
     </Card>
   );

@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { QuantitySelector } from '@/components/ui/quantity-selector';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from 'next-intl';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { upsertPublicContribution } from '@/lib/contribution/actions';
 import { toast } from 'sonner';
 import { ROUNDING_RULES } from '@/lib/item/constants';
@@ -31,22 +31,36 @@ export default function ContributionDialog({
   item, 
   currentTotal,
   participants, 
-  publicToken 
+  publicToken,
+  selectedParticipantId
 }: { 
   isOpen: boolean, 
   onOpenChange: (open: boolean) => void,
   item: any,
   currentTotal: number,
   participants: any[],
-  publicToken: string
+  publicToken: string,
+  selectedParticipantId?: string
 }) {
   const t = useTranslations('PublicPage');
   const [isPending, startTransition] = useTransition();
-  const [participantId, setParticipantId] = useState<string>('');
   
   // Find existing contribution for this item if any
-  const existingContribution = item.contributions.find((c: any) => c.participantId === participantId);
+  const existingContribution = item.contributions.find((c: any) => c.participantId === (selectedParticipantId || ''));
+  
+  const [participantId, setParticipantId] = useState<string>('');
   const [quantity, setQuantity] = useState<string>('');
+
+  // Sync state when dialog opens
+  useEffect(() => {
+    if (isOpen) {
+      const initialId = selectedParticipantId || '';
+      setParticipantId(initialId);
+      
+      const existing = item.contributions.find((c: any) => c.participantId === initialId);
+      setQuantity(existing ? existing.quantity.toString() : '0');
+    }
+  }, [isOpen, selectedParticipantId, item.contributions]);
 
   const handleParticipantChange = (id: string) => {
     setParticipantId(id);
@@ -99,7 +113,7 @@ export default function ContributionDialog({
               {t('dialog.who')}
             </Label>
             <Select onValueChange={handleParticipantChange} value={participantId}>
-              <SelectTrigger className="w-full h-[56px] !h-[56px] border-amber-500/20 bg-background/50 text-lg rounded-xl px-4">
+              <SelectTrigger className="w-full h-[56px] border-amber-500/20 bg-background/50 text-lg rounded-xl px-4">
                 <SelectValue placeholder={t('dialog.whoPlaceholder')} />
               </SelectTrigger>
               <SelectContent className="max-h-60">
@@ -148,7 +162,7 @@ export default function ContributionDialog({
           <DialogFooter className="pt-4">
             <Button 
               type="submit" 
-              className="w-full h-[56px] text-xl font-black bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg transition-all rounded-xl"
+              className="w-full h-[56px] text-xl font-black bg-linear-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg transition-all rounded-xl"
               disabled={isPending || !participantId || !quantity}
             >
               {isPending ? "..." : t('dialog.submit')}
