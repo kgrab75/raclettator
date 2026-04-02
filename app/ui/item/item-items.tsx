@@ -1,18 +1,18 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Item as UiItem,
   ItemActions,
   ItemContent,
   ItemFooter,
   ItemGroup,
   ItemTitle,
+  Item as UiItem,
 } from '@/components/ui/item';
 import { deleteItem } from '@/lib/item/actions';
 import { Item } from '@/lib/item/types';
 import { Bot, Pencil, Trash2, User } from 'lucide-react';
-import Form from 'next/form';
 import { useTranslations } from 'next-intl';
+import Form from 'next/form';
 
 export default function ItemItems({
   items,
@@ -30,7 +30,7 @@ export default function ItemItems({
       {items.map((item) => (
         <UiItem key={item.id} variant="outline">
           <ItemContent>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
               <QuantityBadge item={item} />
               <ItemTitle>
                 {item.systemKey ? t(`systemItems.${item.systemKey}`) : item.name}
@@ -66,7 +66,7 @@ export default function ItemItems({
               <Pencil className="h-4 w-4" />
             </Button>
             <Form
-               action={deleteItem.bind(null, adminToken, item.id)}
+              action={deleteItem.bind(null, adminToken, item.id)}
             >
               <Button
                 variant="outline"
@@ -90,7 +90,7 @@ function QuantityBadge({ item }: { item: Item }) {
     : `${item.requiredQuantity} ${item.category === 'WEIGHT' ? 'g' : ''}`;
 
   return (
-    <Badge variant="secondary" className="font-semibold shrink-0 w-[72px] justify-center text-center">
+    <Badge variant="secondary" className="font-semibold shrink-0 w-10 justify-center text-center">
       {formattedQuantity}
     </Badge>
   );
