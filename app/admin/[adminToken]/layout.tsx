@@ -29,8 +29,6 @@ export default async function AdminLayout({
 
   const { adminToken } = await params;
 
-  console.log(adminToken);
-
   return (
     <SidebarProvider>
       <AppSidebar footer={t('footer')} navItems={navItems} />
