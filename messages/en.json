@@ -97,6 +97,7 @@
     "form": {
       "title": {
         "label": "Title",
+        "description": "A catchy name for your night",
         "placeholder": "🧀Raclette",
         "preview": "🧀Raclette",
         "errors": {
@@ -106,6 +107,7 @@
       },
       "startsAt": {
         "label": "Date & time",
+        "description": "When the first cheese melts",
         "placeholder": "m/d/yyyy hh:mm",
         "preview": "on January 30th at 7:30 PM",
         "previewFromDate": "on {startsAtDate, date, ::MMMM} {day, selectordinal, one {#st} two {#nd} few {#rd} other {#th}} at {startsAtDate, time, ::hmm a}",
@@ -116,6 +118,7 @@
       },
       "location": {
         "label": "Location",
+        "description": "Where the magic happens",
         "placeholder": "at James'",
         "preview": "at James'",
         "errors": {
@@ -124,8 +127,10 @@
         }
       },
       "submit": {
-        "label": "Create event",
-        "update": "Save changes",
+        "create": "Create event",
+        "creating": "Launching...",
+        "edit": "Save changes",
+        "editing": "Saving...",
         "errors": {
           "failed": "Something went wrong. Please try again."
         },

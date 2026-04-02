@@ -2,7 +2,6 @@
 
 import Form from 'next/form';
 
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -13,17 +12,21 @@ import {
 } from '@/components/ui/card';
 import {
   Field,
+  FieldContent,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldTitle,
 } from '@/components/ui/field';
-import { Spinner } from '@/components/ui/spinner';
 
+import SubmitButton from '@/app/ui/common/form/submit-button';
 import { DateTimePicker } from '@/app/ui/common/form/dateTimePicker';
 import { EventProp } from '@/app/ui/event/main-section';
 import { Input } from '@/components/ui/input';
 import { upsertEvent } from '@/lib/event/actions';
 import { type EventFormState } from '@/lib/event/schema';
+import { Calendar, MapPin, PenLine } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Dispatch, useActionState, useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -134,7 +137,13 @@ export function EventCreateForm({
         <Form action={formAction} id="event-create-form">
           <FieldGroup>
             <Field data-invalid={!!formState.errors?.title?.length}>
-              <FieldLabel htmlFor="title">{t('form.title.label')}</FieldLabel>
+              <FieldContent>
+                <FieldTitle>
+                  <PenLine className="h-4 w-4" />
+                  <FieldLabel htmlFor="title" className="border-none p-0 w-fit font-semibold">{t('form.title.label')}</FieldLabel>
+                </FieldTitle>
+                <FieldDescription>{t('form.title.description')}</FieldDescription>
+              </FieldContent>
               <Input
                 id="title"
                 name="title"
@@ -151,9 +160,13 @@ export function EventCreateForm({
             </Field>
 
             <Field data-invalid={!!formState.errors?.location?.length}>
-              <FieldLabel htmlFor="location">
-                {t('form.location.label')}
-              </FieldLabel>
+              <FieldContent>
+                <FieldTitle>
+                  <MapPin className="h-4 w-4" />
+                  <FieldLabel htmlFor="location" className="border-none p-0 w-fit font-semibold">{t('form.location.label')}</FieldLabel>
+                </FieldTitle>
+                <FieldDescription>{t('form.location.description')}</FieldDescription>
+              </FieldContent>
               <Input
                 id="location"
                 name="location"
@@ -170,9 +183,13 @@ export function EventCreateForm({
             </Field>
 
             <Field data-invalid={!!formState.errors?.startsAt?.length}>
-              <FieldLabel htmlFor="startsAt">
-                {t('form.startsAt.label')}
-              </FieldLabel>
+              <FieldContent>
+                <FieldTitle>
+                  <Calendar className="h-4 w-4" />
+                  <FieldLabel htmlFor="startsAt" className="border-none p-0 w-fit font-semibold">{t('form.startsAt.label')}</FieldLabel>
+                </FieldTitle>
+                <FieldDescription>{t('form.startsAt.description')}</FieldDescription>
+              </FieldContent>
               <DateTimePicker
                 date={date}
                 onDateChange={handleDateSelect}
@@ -197,13 +214,19 @@ export function EventCreateForm({
           </FieldGroup>
         </Form>
       </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal">
-          <Button type="submit" disabled={pending} form="event-create-form">
-            {pending && <Spinner />}
-            {adminToken ? t('form.submit.update') : t('form.submit.label')}
-          </Button>
-        </Field>
+      <CardFooter className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+        <SubmitButton
+          pending={pending}
+          mode={adminToken ? 'edit' : 'create'}
+          labels={{
+            create: t('form.submit.create'),
+            creating: t('form.submit.creating'),
+            edit: t('form.submit.edit'),
+            editing: t('form.submit.editing'),
+          }}
+          form="event-create-form"
+          className="w-full sm:w-auto"
+        />
       </CardFooter>
     </Card>
   );

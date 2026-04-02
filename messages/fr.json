@@ -97,6 +97,7 @@
     "form": {
       "title": {
         "label": "Titre",
+        "description": "Le petit nom de la soirée",
         "placeholder": "🧀Raclette",
         "preview": "🧀Raclette",
         "errors": {
@@ -106,6 +107,7 @@
       },
       "startsAt": {
         "label": "Date et heure",
+        "description": "L'heure du premier coup de poêlon",
         "placeholder": "jj/mm/aaaa hh:mm",
         "preview": "le 30 janvier à 19h30",
         "previewFromDate": "Le {day, selectordinal, one {#er} other {#}} {startsAtDate, date, ::MMMM} à {startsAtDate, time, short}",
@@ -116,6 +118,7 @@
       },
       "location": {
         "label": "Lieu",
+        "description": "Où la magie opère",
         "placeholder": "chez Hugo",
         "preview": "chez Hugo",
         "errors": {
@@ -124,8 +127,10 @@
         }
       },
       "submit": {
-        "label": "Créer l'événement",
-        "update": "Enregistrer",
+        "create": "Créer l'événement",
+        "creating": "Lancement...",
+        "edit": "Enregistrer",
+        "editing": "Enregistrement...",
         "errors": {
           "failed": "Une erreur est survenue. Réessaie."
         },

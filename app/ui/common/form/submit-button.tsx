@@ -22,6 +22,7 @@ type SubmitButtonProps = {
   pendingIcon?: ReactNode;
   disabled?: boolean;
   className?: string;
+  form?: string;
 };
 
 export default function SubmitButton({
@@ -33,6 +34,7 @@ export default function SubmitButton({
   pendingIcon = <Spinner data-icon="inline-start" />,
   disabled,
   className,
+  form,
 }: SubmitButtonProps) {
   const config = pending
     ? {
@@ -50,7 +52,7 @@ export default function SubmitButton({
         };
 
   return (
-    <Button type="submit" disabled={pending || disabled} className={className}>
+    <Button type="submit" disabled={pending || disabled} className={className} form={form}>
       {config.icon}
       {config.label}
     </Button>
