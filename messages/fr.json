@@ -22,6 +22,10 @@
     "system": "Système"
   },
   "HomePage": {
+    "seo": {
+      "title": "Organise tes raclettes entre amis facilement",
+      "description": "Fini les calculs savants et les oublis ! {brand} calcule les quantités parfaites et t'aide à organiser tes soirées raclette entre amis."
+    },
     "hero": {
       "badge": "L'outil ultime pour vos soirées d'hiver",
       "titlePart1": "L'art de la raclette, ",

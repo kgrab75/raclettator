@@ -22,6 +22,10 @@
     "system": "System"
   },
   "HomePage": {
+    "seo": {
+      "title": "Organize your raclettes with friends easily",
+      "description": "No more complex calculations and forgotten items! {brand} computes the perfect quantities and helps you organize your raclette parties with friends."
+    },
     "hero": {
       "badge": "The ultimate tool for your winter nights",
       "titlePart1": "The art of raclette, ",

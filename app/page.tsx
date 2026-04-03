@@ -15,11 +15,40 @@ import LanguageSwitcher from '@/app/ui/common/language-switcher';
 import EventInfos from '@/app/ui/event/event-infos';
 import EventInfosSkeleton from '@/app/ui/event/event-infos-skeleton';
 import ThemeToggle from '@/components/theme-toggle';
+import type { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('HomePage.seo');
+  const brand = process.env.NEXT_PUBLIC_BRAND as string;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+  return {
+    title: `${brand} - ${t('title')}`,
+    description: t('description', { brand }),
+    openGraph: {
+      type: 'website',
+      siteName: brand,
+      title: `${brand} - ${t('title')}`,
+      description: t('description', { brand }),
+      url: baseUrl,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${brand} - ${t('title')}`,
+      description: t('description', { brand }),
+    },
+    alternates: {
+      canonical: baseUrl,
+    },
+  };
+}
 
 export default async function HomePage() {
   const t = await getTranslations('HomePage');
+  const seoT = await getTranslations('HomePage.seo');
   const tokens = await getAdminEventTokens();
   const brand = process.env.NEXT_PUBLIC_BRAND as string;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background">
@@ -31,6 +60,7 @@ export default async function HomePage() {
       {/* GLOBAL BACKDROP GLOW */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-full -translate-x-1/2 rounded-full bg-amber-500/20 blur-[120px] dark:bg-amber-500/10" />
 
+      <main>
       {/* 1. IMMERSIVE HERO */}
       <section className="relative flex flex-col items-center justify-center px-4 pt-16 pb-16 text-center md:pt-32 md:pb-32">
         <Badge text={t('hero.badge')} />
@@ -172,6 +202,20 @@ export default async function HomePage() {
           </Button>
         </div>
       </section>
+      </main>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: brand,
+            url: baseUrl,
+            description: seoT('description', { brand }),
+          }),
+        }}
+      />
     </div>
   );
 }
