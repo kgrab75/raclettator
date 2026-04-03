@@ -402,7 +402,7 @@
       "itemLine": "{quantity}"
     },
     "addItem": {
-      "btn": "Ajouter un élément",
+      "btn": "Ajouter un article",
       "dialogTitle": "Ajouter à la liste",
       "dialogDescription": "Tu amènes quelque chose qui n'est pas dans la liste ?",
       "nameLabel": "Qu'est-ce que tu amènes ?",
