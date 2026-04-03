@@ -14,17 +14,17 @@ export const contentType = 'image/png';
 
 export default async function Image({ params }: { params: Promise<{ publicToken: string }> }) {
     const { publicToken } = await params;
-    const event = await fetchEventByPublicToken(publicToken);    
-    
+    const event = await fetchEventByPublicToken(publicToken);
+
     if (!event) return new Response('Not Found', { status: 404 });
 
     const t = await getTranslations('OG');
     const tStartsAt = await getTranslations('NewEvent.form.startsAt');
-    
+
     const d = new Date(event.startsAt);
-    const dateFormatted = tStartsAt('previewFromDate', { 
-        day: d.getDate(), 
-        startsAtDate: d 
+    const dateFormatted = tStartsAt('previewFromDate', {
+        day: d.getDate(),
+        startsAtDate: d
     });
 
     return new ImageResponse(
@@ -88,7 +88,7 @@ export default async function Image({ params }: { params: Promise<{ publicToken:
                             fontSize: 92,
                             fontWeight: 900,
                             color: 'white',
-                            marginBottom: 24,
+                            marginBottom: 32,
                             lineHeight: 1.1,
                             letterSpacing: '-0.04em',
                             textShadow: '0 4px 12px rgba(0,0,0,0.1)',
@@ -103,7 +103,7 @@ export default async function Image({ params }: { params: Promise<{ publicToken:
                             gap: 32,
                             alignItems: 'center',
                             color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: 32,
+                            fontSize: 48,
                             fontWeight: 500,
                         }}
                     >
@@ -130,13 +130,13 @@ export default async function Image({ params }: { params: Promise<{ publicToken:
                 {/* Catchy footer */}
                 <div
                     style={{
-                        marginTop: 64,
+                        marginTop: 90,
                         padding: '18px 42px',
                         backgroundColor: 'rgba(255, 255, 255, 0.15)',
                         borderRadius: 100,
                         border: '1.5px solid rgba(255, 255, 255, 0.3)',
                         color: 'white',
-                        fontSize: 42,
+                        fontSize: 64,
                         fontWeight: 'bold',
                         boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
                     }}
