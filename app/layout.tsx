@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { headers } from 'next/headers';
 import { getLocale, getMessages } from 'next-intl/server';
@@ -27,6 +27,15 @@ const brand = process.env.NEXT_PUBLIC_BRAND;
 export const metadata: Metadata = {
   title: brand,
   description: 'Organise tes raclettes entre amis',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: brand,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#facc15',
 };
 
 export default async function RootLayout({
