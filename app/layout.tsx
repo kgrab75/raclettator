@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
+import { headers } from 'next/headers';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono, Roboto } from 'next/font/google';
 
@@ -33,10 +34,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [locale, messages] = await Promise.all([
+  const [locale, messages, headersList] = await Promise.all([
     getLocale(),
     getMessages(),
+    headers(),
   ]);
+
+  const nonce = headersList.get('x-nonce') ?? undefined;
 
   return (
     <html lang={locale} suppressHydrationWarning className={roboto.variable}>
@@ -49,6 +53,7 @@ export default async function RootLayout({
           enableSystem
           enableColorScheme
           disableTransitionOnChange
+          nonce={nonce}
         >
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
