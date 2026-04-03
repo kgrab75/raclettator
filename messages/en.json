@@ -400,6 +400,16 @@
       "title": "Your commitments",
       "empty": "You haven't committed to bringing anything yet! Tell us what you're bringing below. 👇",
       "itemLine": "{quantity}"
+    },
+    "addItem": {
+      "btn": "Add an item",
+      "dialogTitle": "Add to the list",
+      "dialogDescription": "Are you bringing something that is not on the list?",
+      "nameLabel": "What are you bringing?",
+      "namePlaceholder": "Ex: White wine, Cake...",
+      "categoryLabel": "Type",
+      "quantityLabel": "How much?",
+      "submit": "Add and contribute"
     }
   },
   "OG": {

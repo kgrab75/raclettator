@@ -400,6 +400,16 @@
       "title": "Tes engagements",
       "empty": "Tu n'as encore rien prévu d'apporter ! Dis-nous ce que tu ramènes ci-dessous. 👇",
       "itemLine": "{quantity}"
+    },
+    "addItem": {
+      "btn": "Ajouter un élément",
+      "dialogTitle": "Ajouter à la liste",
+      "dialogDescription": "Tu amènes quelque chose qui n'est pas dans la liste ?",
+      "nameLabel": "Qu'est-ce que tu amènes ?",
+      "namePlaceholder": "Ex: Vin blanc, Tarte...",
+      "categoryLabel": "Type",
+      "quantityLabel": "Quelle quantité ?",
+      "submit": "Ajouter et contribuer"
     }
   },
   "OG": {

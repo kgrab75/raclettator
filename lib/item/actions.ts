@@ -7,6 +7,7 @@ import z from 'zod';
 import { emptyItem, ItemFormState, upsertItemFormSchema } from './schema';
 import { checkRateLimit } from '@/lib/ratelimit';
 import { RealtimeEmitter } from '@/lib/realtime/emitter';
+import { ItemCategory } from '@/generated/prisma/enums';
 
 export async function upsertItem(
   adminToken: string,
@@ -149,5 +150,56 @@ export async function deleteItem(adminToken: string, itemId: string) {
     }
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function addPublicItemWithContribution(
+  publicToken: string,
+  participantId: string,
+  name: string,
+  category: string,
+  quantity: number
+) {
+  const isAllowed = await checkRateLimit(15);
+  if (!isAllowed) throw new Error("Rate limit exceeded");
+
+  try {
+    const existingEvent = await prisma.event.findUnique({
+      where: { publicToken },
+      include: { _count: { select: { items: true } } },
+    });
+    
+    if (!existingEvent) throw new Error("Event not found");
+
+    if (existingEvent._count.items >= 40) {
+      throw new Error("Item limit reached");
+    }
+
+    await prisma.$transaction(async (tx) => {
+      const newItem = await tx.item.create({
+        data: {
+          eventId: existingEvent.id,
+          name,
+          category: category as ItemCategory,
+          requiredQuantity: quantity,
+          isSystem: false,
+        },
+      });
+
+      await tx.contribution.create({
+        data: {
+          participantId,
+          itemId: newItem.id,
+          quantity,
+        },
+      });
+    });
+
+    RealtimeEmitter.notify(publicToken);
+    revalidatePath(`/${publicToken}`);
+    revalidatePath(`/admin/${existingEvent.adminToken}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not add item");
   }
 }
