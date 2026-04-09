@@ -50,10 +50,11 @@ jobs:
           DATABASE_URL: "postgres://dummy:dummy@localhost:5432/dummy"
 
       - name: Playwright Summary
-        uses: danjames92/playwright-report-summary@v1
+        uses: daun/playwright-report-summary@v3
         if: always()
         with:
           report-file: playwright-report/results.json
+          job-summary: true
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
