@@ -10,7 +10,7 @@
   <br />
   <br />
   <a href="https://raclettator.kghome.ddns.net/">
-    <img src="https://img.shields.io/badge/🚀_TESTER_LA_LIVE_DEMO-Cliquer_ici-FF4500?style=for-the-badge" alt="Live Demo" height="40" />
+    <img src="https://img.shields.io/badge/🚀_Tester_Raclettator-Cliquer_ici-FF4500?style=for-the-badge" alt="Live Demo" height="40" />
   </a>
 </div>
 
