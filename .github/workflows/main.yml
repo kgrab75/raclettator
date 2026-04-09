@@ -44,7 +44,7 @@ jobs:
 
       - name: Run E2E tests
         run: |
-          touch .env
+          echo 'NEXT_PUBLIC_BRAND="Raclettator"' > .env
           pnpm run test:e2e
         env:
           DATABASE_URL: "postgres://dummy:dummy@localhost:5432/dummy"
