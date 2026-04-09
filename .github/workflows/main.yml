@@ -53,7 +53,7 @@ jobs:
         uses: daun/playwright-report-summary@v3
         if: always()
         with:
-          report-file: playwright-report/results.json
+          report-file: results.json
           job-summary: true
 
       - name: Upload Playwright report
