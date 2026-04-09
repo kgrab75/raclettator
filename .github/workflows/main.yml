@@ -43,7 +43,11 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run E2E tests
-        run: pnpm run test:e2e
+        run: |
+          touch .env
+          pnpm run test:e2e
+        env:
+          DATABASE_URL: "postgres://dummy:dummy@localhost:5432/dummy"
 
   build-and-push-image:
     runs-on: ubuntu-latest

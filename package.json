@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "dotenvx run -- next dev",
     "build": "dotenvx run -f .env.production -- next build",
     "start": "dotenvx run -f .env.production -- next start",
