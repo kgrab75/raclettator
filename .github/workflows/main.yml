@@ -31,8 +31,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Install dependencies
         run: pnpm install
@@ -48,7 +46,7 @@ jobs:
           echo 'NEXT_PUBLIC_BRAND="Raclettator"' > .env
           pnpm run test:e2e
         env:
-          DATABASE_URL: "postgres://dummy:dummy@localhost:5432/dummy"
+          DATABASE_URL: 'postgres://dummy:dummy@localhost:5432/dummy'
 
       - name: Playwright Summary
         uses: daun/playwright-report-summary@v3
