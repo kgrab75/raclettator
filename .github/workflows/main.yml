@@ -147,6 +147,20 @@ jobs:
             set -eu
             cd /srv/docker/media-stack
 
+            echo "SSH UID: $(id -u)"
+            echo "SSH GID: $(id -g)"
+
+            ls -ld .
+            ls -l .env
+
+            test -w . && echo "Directory writable: YES" || echo "Directory writable: NO"
+            test -w .env && echo "ENV writable: YES" || echo "ENV writable: NO"
+
+            # Check whether a temporary file can actually be created
+            TEMP_FILE="$(mktemp ./.ci-permission-test.XXXXXX)"
+            rm "$TEMP_FILE"
+            echo "Temporary file creation: OK"
+
             # Use the exact commit that triggered the workflow
             VERSION="${{ github.sha }}"
             export RACLETTATOR_RELEASE="$VERSION"
