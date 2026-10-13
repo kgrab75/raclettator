@@ -148,8 +148,9 @@ jobs:
             cd /srv/docker/media-stack
 
             VERSION="${{ github.sha }}"
+            RELEASE_FILE="deploy/raclettator.release.yml"
 
-            # Prepare the next release in a temporary file
+            # Prepare the next release
             NEXT_RELEASE="$(mktemp ./deploy/.raclettator-next.XXXXXX)"
             trap 'rm -f "$NEXT_RELEASE"' EXIT
 
@@ -161,26 +162,40 @@ jobs:
                 image: ghcr.io/kgrab75/raclettator:migrate-$VERSION
             EOF
 
-            # Temporarily select the new release
             export COMPOSE_FILE="docker-compose.yml:$NEXT_RELEASE"
 
-            # Validate configuration
             docker compose config -q
 
-            # Pull matching images
+            # Download matching images
             docker compose pull raclettator raclettator-migrate
 
-            # Run migrations before replacing the application
+            # Run database migrations
             docker compose run --rm --no-deps raclettator-migrate
 
-            # Deploy only the application
-            docker compose up -d --no-deps --force-recreate raclettator
+            # Deploy and wait until healthy
+            if docker compose up -d --no-deps --force-recreate \
+                --wait --wait-timeout 60 raclettator; then
 
-            # Persist the release once deployment commands succeed
-            chmod 644 "$NEXT_RELEASE"
-            mv -f "$NEXT_RELEASE" deploy/raclettator.release.yml
+              # Persist the validated release
+              chmod 644 "$NEXT_RELEASE"
+              mv -f "$NEXT_RELEASE" "$RELEASE_FILE"
 
-            echo "Raclettator deployed: $VERSION"
+              echo "✅ Raclettator deployed successfully: $VERSION"
+
+            else
+              echo "❌ Healthcheck failed. Rolling back..." >&2
+
+              docker compose logs --tail=50 raclettator || true
+
+              # Restore the previously validated release
+              docker compose \
+                -f docker-compose.yml \
+                -f "$RELEASE_FILE" \
+                up -d --no-deps --force-recreate raclettator
+
+              echo "⚠️ Previous release restored. Deployment failed." >&2
+              exit 1
+            fi
 
   send-notification:
     runs-on: ubuntu-24.04
