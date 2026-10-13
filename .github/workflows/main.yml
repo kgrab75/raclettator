@@ -101,7 +101,9 @@ jobs:
           context: .
           target: runner
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
@@ -116,7 +118,10 @@ jobs:
           context: .
           target: migrator
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:migrate
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:migrate
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:migrate-main
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:migrate-${{ github.sha }}
           platforms: linux/amd64
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
 
@@ -139,17 +144,30 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set -e
+            set -eu
             cd /srv/docker/media-stack
 
-            # Pull application and migration images
+            # Use the exact commit that triggered the workflow
+            VERSION="${{ github.sha }}"
+            export RACLETTATOR_RELEASE="$VERSION"
+
+            # Download matching application and migration images
             docker compose pull raclettator raclettator-migrate
 
-            # Apply migrations without touching PostgreSQL
+            # Apply database migrations
             docker compose run --rm --no-deps raclettator-migrate
 
-            # Deploy application only after successful migrations
+            # Deploy the application
             docker compose up -d --no-deps --force-recreate raclettator
+
+            # Persist the deployed version for subsequent Compose commands
+            if grep -q '^RACLETTATOR_RELEASE=' .env; then
+              sed -i "s/^RACLETTATOR_RELEASE=.*/RACLETTATOR_RELEASE=$VERSION/" .env
+            else
+              printf '\nRACLETTATOR_RELEASE=%s\n' "$VERSION" >> .env
+            fi
+
+            echo "Raclettator deployed from commit $VERSION"
 
   send-notification:
     runs-on: ubuntu-24.04
