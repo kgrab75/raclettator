@@ -99,6 +99,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          target: runner
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -108,6 +109,16 @@ jobs:
           secrets: |
             DOTENV_PRIVATE_KEY_PRODUCTION=${{ secrets.DOTENV_PRIVATE_KEY_PRODUCTION }}
           provenance: false
+
+      - name: Build and push Prisma migration image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          target: migrator
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:migrate
+          platforms: linux/amd64
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v3
@@ -130,7 +141,14 @@ jobs:
           script: |
             set -e
             cd /srv/docker/media-stack
-            docker compose pull raclettator
+
+            # Pull application and migration images
+            docker compose pull raclettator raclettator-migrate
+
+            # Apply migrations without touching PostgreSQL
+            docker compose run --rm --no-deps raclettator-migrate
+
+            # Deploy application only after successful migrations
             docker compose up -d --no-deps --force-recreate raclettator
 
   send-notification:

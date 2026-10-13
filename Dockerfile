@@ -22,6 +22,14 @@ RUN --mount=type=cache,target=/root/.npm \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Image dedicated to Prisma migrations
+FROM deps AS migrator
+
+ENV NODE_ENV=production
+
+RUN test -x ./node_modules/.bin/prisma
+
+CMD ["./node_modules/.bin/prisma", "migrate", "deploy"]
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -71,16 +79,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # IMPORTANT: Standalone mode doesn't include prisma binary usually, we need to copy the generated client if it's outside node_modules
 # or ensure it's in the standalone output. Next.js standalone includes node_modules usually.
 # However, we need the prisma schema for migrations.
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
-COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
-
-# Include Prisma CLI and its dependencies for production migrations
-COPY --from=deps /app/node_modules ./node_modules
-
-# Ensure Prisma CLI is available
-RUN test -x ./node_modules/.bin/prisma
 
 USER nextjs
 
@@ -93,4 +93,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Commande pour lancer les migrations puis le serveur
-CMD ["sh", "-c", "dotenvx run -- ./node_modules/.bin/prisma migrate deploy && dotenvx run -- node server.js"]
+CMD ["sh", "-c", "exec dotenvx run -- node server.js"]
