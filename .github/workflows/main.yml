@@ -132,7 +132,7 @@ jobs:
             set -e
             cd /srv/docker/media-stack
             docker compose pull raclettator
-            docker compose up -d --force-recreate raclettator
+            docker compose up -d --no-deps --force-recreate raclettator
 
   send-notification:
     runs-on: ubuntu-latest
