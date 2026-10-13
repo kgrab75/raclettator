@@ -102,7 +102,7 @@
       "title": {
         "label": "Titre",
         "description": "Le petit nom de la soirée",
-        "placeholder": "🧀Raclette",
+        "placeholder": "ex. 🧀Raclette",
         "preview": "🧀Raclette",
         "errors": {
           "required": "Merci de renseigner un titre.",
@@ -123,7 +123,7 @@
       "location": {
         "label": "Lieu",
         "description": "Où la magie opère",
-        "placeholder": "chez Hugo",
+        "placeholder": "ex. chez Hugo",
         "preview": "chez Hugo",
         "errors": {
           "required": "Merci de renseigner un lieu.",
