@@ -78,8 +78,8 @@ Vous souhaitez explorer le code ou faire tourner le projet en local ? Suivez ces
 
 ### 2. Cloner le repository
 ```bash
-git clone https://github.com/votre-pseudo/nextjs-raclettator.git
-cd nextjs-raclettator
+git clone https://github.com/kgrab75/raclettator.git
+cd raclettator
 ```
 
 ### 3. Installer les dépendances
