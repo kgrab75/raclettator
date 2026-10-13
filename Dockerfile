@@ -76,6 +76,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/generated ./generated
 COPY --from=builder --chown=nextjs:nodejs /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
+# Include Prisma CLI and its dependencies for production migrations
+COPY --from=deps /app/node_modules ./node_modules
+
+# Ensure Prisma CLI is available
+RUN test -x ./node_modules/.bin/prisma
+
 USER nextjs
 
 EXPOSE 3000
@@ -87,4 +93,4 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Commande pour lancer les migrations puis le serveur
-CMD ["sh", "-c", "dotenvx run -- npx prisma migrate deploy && dotenvx run -- node server.js"]
+CMD ["sh", "-c", "dotenvx run -- ./node_modules/.bin/prisma migrate deploy && dotenvx run -- node server.js"]
