@@ -147,27 +147,40 @@ jobs:
             set -eu
             cd /srv/docker/media-stack
 
-            # Use the exact commit that triggered the workflow
             VERSION="${{ github.sha }}"
-            export RACLETTATOR_RELEASE="$VERSION"
 
-            # Download matching application and migration images
+            # Prepare the next release in a temporary file
+            NEXT_RELEASE="$(mktemp ./deploy/.raclettator-next.XXXXXX)"
+            trap 'rm -f "$NEXT_RELEASE"' EXIT
+
+            cat > "$NEXT_RELEASE" <<EOF
+            services:
+              raclettator:
+                image: ghcr.io/kgrab75/raclettator:$VERSION
+              raclettator-migrate:
+                image: ghcr.io/kgrab75/raclettator:migrate-$VERSION
+            EOF
+
+            # Temporarily select the new release
+            export COMPOSE_FILE="docker-compose.yml:$NEXT_RELEASE"
+
+            # Validate configuration
+            docker compose config -q
+
+            # Pull matching images
             docker compose pull raclettator raclettator-migrate
 
-            # Apply database migrations
+            # Run migrations before replacing the application
             docker compose run --rm --no-deps raclettator-migrate
 
-            # Deploy the application
+            # Deploy only the application
             docker compose up -d --no-deps --force-recreate raclettator
 
-            # Persist the deployed version for subsequent Compose commands
-            if grep -q '^RACLETTATOR_RELEASE=' .env; then
-              sed -i "s/^RACLETTATOR_RELEASE=.*/RACLETTATOR_RELEASE=$VERSION/" .env
-            else
-              printf '\nRACLETTATOR_RELEASE=%s\n' "$VERSION" >> .env
-            fi
+            # Persist the release once deployment commands succeed
+            chmod 644 "$NEXT_RELEASE"
+            mv -f "$NEXT_RELEASE" deploy/raclettator.release.yml
 
-            echo "Raclettator deployed from commit $VERSION"
+            echo "Raclettator deployed: $VERSION"
 
   send-notification:
     runs-on: ubuntu-24.04
