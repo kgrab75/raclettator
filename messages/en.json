@@ -102,7 +102,7 @@
       "title": {
         "label": "Title",
         "description": "A catchy name for your night",
-        "placeholder": "🧀Raclette",
+        "placeholder": "e.g. 🧀Raclette",
         "preview": "🧀Raclette",
         "errors": {
           "required": "Please enter a title.",
@@ -123,7 +123,7 @@
       "location": {
         "label": "Location",
         "description": "Where the magic happens",
-        "placeholder": "at James'",
+        "placeholder": "e.g. at James'",
         "preview": "at James'",
         "errors": {
           "required": "Please enter a location.",
